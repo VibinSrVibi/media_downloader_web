@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Instagram Video Downloader | Free & Fast Tool">
+    <meta name="description" content="Download Instagram videos online for free with our fast and secure Instagram video downloader. No login required, works on all devices.">
+    <meta name="keywords" content="Instagram video downloader, download Instagram videos, free Instagram downloader, save Instagram videos">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Your Name or Website Name">
+    <meta property="og:title" content="Instagram Video Downloader | Free & Fast Tool">
+    <meta property="og:description" content="Use our free Instagram video downloader to save videos online instantly. Fast, secure, and user-friendly tool.">
+    <!-- <meta property="og:url" content="https://yourwebsite.com/instagram-video-downloader"> -->
+    <meta property="og:type" content="website">
+    <!-- <meta property="og:image" content="https://yourwebsite.com/images/og-image.jpg"> -->
+    <!-- <link rel="canonical" href="https://yourwebsite.com/instagram-video-downloader"> -->
+    <title>Instagram Video Downloader | Free & Fast Tool</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            /*background-color: #f8f9fa;*/
+            background: linear-gradient(to right,#9E34B1,#D82D72);
+            padding: 5px;
+            /*text-align: center;*/
+            color: #ffffff;
+        }
+        .container-fluid {
+            /* padding: 0px; */
+            max-width: 100%;
+            margin: auto;
+        }
+        .site{
+            padding: 20px;
+        }
+        .site-name{
+            text-decoration: none;
+            color: #000000;
+            font-size: 25px;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="url"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            /* width: 100%; */
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            /* background: linear-gradient(to right,#9E34B1,#D82D72); */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .legal {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        ul li{
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="site">
+            <a href="http://vbbingo.com" class="site-name">VB Bingo</a>
+        </div>
+    </div>
+    <header>
+        <h1>Instagram Video Downloader</h1>
+    </header>
+    <div class="container">
+        <p>Download Instagram videos for free, quickly, and securely.</p>
+        <h2>How to Download Instagram and Facebook Videos</h2>
+        <ol>
+            <li>Copy the URL of the video you want to download.</li>
+            <li>Paste the URL into the field below.</li>
+            <li>Click the "Download" button to save the video to your device.</li>
+        </ol>
+        <form id="downloadForm">
+            <input type="url" id="videoUrl" name="videoUrl" placeholder="Enter Instagram video URL" required>
+            <button type="submit">Download</button>
+        </form>
+        <div id="result" style="margin-top: 20px;"></div>
+        <hr/>
+        <h2>Why Choose VB Bingo?</h2>
+        <ul>
+            <li><strong>Fast Downloading:</strong> Enjoy lightning-fast downloads without delays.</li>
+            <li><strong>No Login Required:</strong> No need to log in or share any personal information.</li>
+            <li><strong>High Quality:</strong> Save videos in the best available resolution, ensuring superior quality.</li>
+            <li><strong>Supports Facebook and Instagram:</strong> Download videos from both platforms with ease.</li>
+            <li><strong>100% Free:</strong> Use our tool without any hidden charges or subscription fees.</li>
+            <li><strong>Safe & Secure:</strong> Our tool is designed with user privacy and data security in mind.</li>
+        </ul>
+        <hr/>
+        <h2>Thanks for Choosing VB Bingo for Downloading Instagram and Facebook Videos!</h2>
+        <p>We are committed to providing the best video downloading experience for all your favorite content.</p>
+    </div>
+    <footer>
+        <p>© 2024 Your VB Bingo. All rights reserved.</p>
+        <p class="legal">This website is not affiliated with Instagram. Download videos only for personal use and ensure you have permission from the content owner.</p>
+    </footer>
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const videoUrl = document.getElementById('videoUrl').value;
+            if (videoUrl) {
+                document.getElementById('result').innerHTML = `<p>Fetching video...</p>`;
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://media-downloader-backend-knkp.onrender.com/api/instagram/nayan_download',
+                    data: {
+                        url: videoUrl
+                    },
+                    success: function(resultData){
+                        console.log(resultData);
+                        console.log(resultData.status);
+                        if(resultData.status){
+                            var responseData=resultData.data[0];
+                            $('#result').html(`
+                                <p>Here is your video preview:</p>
+                                <video controls width="600">
+                                    <source src="${responseData.url}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p>
+                                    <a href="${responseData.url}" target="_blank" download>Download Video</a>
+                                </p>
+                            `);
+                        }else{
+                            document.getElementById('result').innerHTML = `<p>Unable to download. Please retry.</p>`;
+                        }
+                    },
+                    error: function(errorData){
+                        console.log(errorData)
+                    }
+                });
+            } else {
+                alert('Please enter a valid URL');
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
