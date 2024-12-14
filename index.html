@@ -170,14 +170,13 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="videoModal">Your Video</h5>
                     <div class="btn-group" role="group" aria-label="Horizontal button group">
-                        <button type="button" class="btn-primary" data-bs-dismiss="modal" aria-label="Close" onclick="downloadVideo()"><i class="fa fa-download"></i> Download</button>
-                        &nbsp;&nbsp;
+                        <button type="button" class="btn-primary" onclick="downloadVideo()"><i class="fa fa-download"></i> Download</button>
+                        &nbsp;
                         <button type="button" class="btn-danger" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
                     </div>
                 </div>
                 <div class="modal-body">
                     <video id="videoPlayerModal" class="videoPlayerModal" controls autoplay="true">
-                        
                     </video>
                 </div>
                 <!-- <div class="modal-footer">
@@ -203,7 +202,6 @@
               </div>
             </div>
         </div>
-
         <div class="fullscreen-spinner" id="fullscreen-spinner">
             <div class="spinner-border text-primary" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -256,7 +254,6 @@
                             sourceUrl=responseData.url;
                             videoPlayerModal.src=sourceUrl;
                             videoPlayerModal.play();
-                            
                         }else{
                             document.getElementById('result').innerHTML = `<p>Unable to download. Please retry.</p>`;
                         }
@@ -272,6 +269,7 @@
 
         function downloadVideo(){
             console.log(sourceUrl);
+            videoPlayerModal.pause();
             window.location.href=sourceUrl;
             //load next popup as thanks for downloading
             bootstapThanksModal.show();
@@ -284,6 +282,28 @@
             navigator.clipboard.readText().then((text)=>{
                 document.getElementById('videoUrl').value=text;
             })
+        }
+
+        
+
+        async function shareFile(){
+            let fileUrl="https://d.rapidcdn.app/d?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL3ZpZGVvLXZpZTEtMS54eC5mYmNkbi5uZXQvbzEvdi90Mi9mMi9tNjkvQVFON1J4U1F1QzladndyUEV5WDFpVXY3dmlqVmdnSm5MYUZETV9GUl9zdk5INmttTVBIMzlMeVBmYlV0WlFIQ2lTQ1lQbEQ0QlpBQUhxbkxGSWFucDZwMS5tcDQ_c3RyZXh0PTEmX25jX2NhdD0xMDMmX25jX3NpZD04YmY4ZmUmX25jX2h0PXZpZGVvLXZpZTEtMS54eC5mYmNkbi5uZXQmX25jX29oYz1PR2V6QmNJNkR3a1E3a052Z0dVcDNGRyZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbmh3ZGw5d2NtOW5jbVZ6YzJsMlpTNUdRVU5GUWs5UFN5NHVRek11TXpZd0xuQnliMmR5WlhOemFYWmxYMmd5TmpRdFltRnphV010WjJWdU1sOHpOakJ3SWl3aWVIQjJYMkZ6YzJWMFgybGtJam8xTXpFMk1qRTVNRFkxTWpreE5Ua3NJblZ5YkdkbGJsOXpiM1Z5WTJVaU9pSjNkM2NpZlElM0QlM0QmY2NiPTktNCZfbmNfenQ9Mjgmb2g9MDBfQVlDWllYMnRCR3poR0NYdlZoTkk3N2lpeVdmU0JkQlFxQUhkU1RHZzRyZVFBUSZvZT02NzYzNTk5MiZkbD0xIiwiZmlsZW5hbWUiOiJTbmFwc2F2ZS5hcHBfQVFON1J4U1F1QzladndyUEV5WDFpVXY3dmlqVmdnSm5MYUZETV9GUl9zdk5INmttTVBIMzlMeVBmYlV0WlFIQ2lTQ1lQbEQ0QlpBQUhxbkxGSWFucDZwMS5tcDQifQ.j18lqP3b1XgMr-nwVAgV1-HEjkSttu_0tT87FjCEbHs&dl=";
+
+            const response = await fetch(fileUrl);
+            const blob = await response.blob();
+
+            // Create a File object from the blob
+            const fileName = "shared_file.mp4"; // Set a name for the file
+            const file = new File([blob], fileName, { type: blob.type });
+            console.log(file)
+            
+            await navigator.share({
+                title: 'Check out this file!',
+                text: 'Sharing with your friends',
+                files: [file],
+            });
+            console.log('File shared successfully!');
+            
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
