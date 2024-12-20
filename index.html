@@ -256,6 +256,7 @@
         const videoPlayerModal=document.getElementById('videoPlayerModal');
         const imageViewerModal=document.getElementById('imageViewerModal');
         var sourceUrl='';
+        
         document.getElementById('downloadForm').addEventListener('submit', function (e) {
             e.preventDefault();
             spinner.style.display='';
@@ -265,6 +266,7 @@
                 $.ajax({
                     type: 'POST',
                     url: 'https://media-downloader-backend-knkp.onrender.com/api/instagram/nayan_download',
+                    //url: 'http://localhost:10000/api/instagram/nayan_download',
                     data: {
                         url: videoUrl
                     },
@@ -324,6 +326,20 @@
                 document.getElementById('videoUrl').value=text;
             })
         }
+
+        function temperory(){
+            $.ajax({
+                    type: 'GET',
+                    url: 'https://media-downloader-backend-knkp.onrender.com/',
+                    success: function(resultData){
+                        //console.log(resultData)
+                    }
+                });
+        }
+
+        setTimeout(()=>{
+            temperory();
+        },1500)
 
         
 
