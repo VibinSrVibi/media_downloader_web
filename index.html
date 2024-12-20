@@ -217,6 +217,29 @@
             </div>
         </div>
 
+        <div class="modal fade" id="restrictedImageModal" aria-hidden="true" aria-labelledby="restrictedImageModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModal">Your Image</h5>
+                    <div class="btn-group" role="group" aria-label="Horizontal button group">
+                        <button type="button" class="btn-primary" onclick="downloadVideo()"><i class="fa fa-download"></i> Download</button>
+                        &nbsp;
+                        <button type="button" class="btn-danger" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="" id="restricted_msg">
+                        We're unable to preview the image due to restrictions, but you can download it directly by <a href="" id="href_source" style="text-decoration: none;">clicking here</a>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                </div> -->
+              </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="thanksModal" aria-hidden="true" aria-labelledby="videoModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -248,14 +271,23 @@
         spinner.style.display='none';
         const modalElement = document.getElementById('videoModal');
         const imagemodalElement=document.getElementById('imageModal');
+        const restrictedImageModalElement=document.getElementById('restrictedImageModal');
         const thanksModal=document.getElementById('thanksModal');
         // Initialize the Bootstrap modal
         const bootstrapModal = new bootstrap.Modal(modalElement);
         const bootstrapImageModal=new bootstrap.Modal(imagemodalElement);
-        const bootstapThanksModal=new bootstrap.Modal(thanksModal);
+        const bootstrapThanksModal=new bootstrap.Modal(thanksModal);
+        const bootstraprestrictedModal=new bootstrap.Modal(restrictedImageModalElement);
         const videoPlayerModal=document.getElementById('videoPlayerModal');
         const imageViewerModal=document.getElementById('imageViewerModal');
+        const href_source=document.getElementById('href_source');
         var sourceUrl='';
+
+        // Add event listener for the hidden.bs.modal event
+        modalElement.addEventListener('hidden.bs.modal', (event) => {
+            videoPlayerModal.pause();
+            // Perform any cleanup or additional actions here
+        });
         
         document.getElementById('downloadForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -265,7 +297,7 @@
                 //document.getElementById('result').innerHTML = `<p>Fetching video...</p>`;
                 $.ajax({
                     type: 'POST',
-                    url: 'https://media-downloader-backend-knkp.onrender.com/api/instagram/nayan_download',
+                    url: 'https://media-downloader-backend-knkp.onrender.com/api/instagram/download',
                     //url: 'http://localhost:10000/api/instagram/nayan_download',
                     data: {
                         url: videoUrl
@@ -287,10 +319,19 @@
                             var responseData=resultData.data[0];
                             sourceUrl=responseData.url;
                             if(sourceUrl.includes('jpg') || sourceUrl.includes('png') || sourceUrl.includes('jpeg') || sourceUrl.includes('stp=dst-jpg')){
-                                //image
-                                bootstrapImageModal.show();
-                                spinner.style.display='none';
-                                imageViewerModal.src=sourceUrl;
+                                if(sourceUrl.includes('scontent-fra3-1.cdninstagram.com')){
+                                    //restricted url
+                                    bootstraprestrictedModal.show();
+                                    spinner.style.display='none';
+                                    href_source.href=sourceUrl;
+                                }else{
+                                    //image
+                                    bootstrapImageModal.show();
+                                    spinner.style.display='none';
+                                    imageViewerModal.src=sourceUrl;
+                                }
+                                //https://scontent-fra3-1.cdninstagram.com/v/t51.29350-15/470681586_1151062493348137_6261723634468220771_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMzUweDE2ODcuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-fra3-1.cdninstagram.com&_nc_cat=101&_nc_ohc=Kl58X-pZcHcQ7kNvgF0zC3F&_nc_gid=098df66b57c64d67b275480a43df7657&edm=APs17CUBAAAA&ccb=7-5&oh=00_AYAw2nilwccZmzo3-Lr2UduMHaDDCoOlPJHcNPDwz-1U-A&oe=676B777B&_nc_sid=10d13b&dl=1
+                                //https://scontent-yyz1-1.cdninstagram.com/v/t39.30808-6/470150180_994145522749260_5821961822979903771_n.jpg?stp=dst-jpg_e15_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDAweDEwMDAuc2RyLmYzMDgwOC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_cat=100&_nc_ohc=emMeCfpLBTcQ7kNvgFImlHq&_nc_gid=32a0775b1d7945b692c79b3f6787591a&edm=APs17CUAAAAA&ccb=7-5&oh=00_AYDuV8dJLzfq4HAeXHxeLEkmzCoyvOl52P9kWURnSSVEdg&oe=676B572E&_nc_sid=10d13b&dl=1
                             }else{
                                 bootstrapModal.show();
                                 spinner.style.display='none';
@@ -315,9 +356,9 @@
             videoPlayerModal.pause();
             window.location.href=sourceUrl;
             //load next popup as thanks for downloading
-            bootstapThanksModal.show();
+            bootstrapThanksModal.show();
             setTimeout(()=>{
-                bootstapThanksModal.hide();
+                bootstrapThanksModal.hide();
             },3000)
         }
 
