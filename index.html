@@ -280,12 +280,16 @@
         //const bootstraprestrictedModal=new bootstrap.Modal(restrictedImageModalElement);
         const videoPlayerModal=document.getElementById('videoPlayerModal');
         const imageViewerModal=document.getElementById('imageViewerModal');
+        const image_restricted_msg=document.getElementById('image_restricted_msg');
         const href_source=document.getElementById('href_source');
         var sourceUrl='';
 
         // Add event listener for the hidden.bs.modal event
         modalElement.addEventListener('hidden.bs.modal', (event) => {
             videoPlayerModal.pause();
+            imageViewerModal.src='';
+            imageViewerModal.style.display='';
+            image_restricted_msg.innerHTML='';
             // Perform any cleanup or additional actions here
         });
         
@@ -325,14 +329,16 @@
                                 imageViewerModal.src=sourceUrl;
                                 //check image is loaded
                                 checkImageLoaded(imageViewerModal).then(img_status=>{
-                                    console.log(img_status)
-                                    
+                                    imageViewerModal.src=sourceUrl;
+                                    imageViewerModal.style.display='';
+                                    image_restricted_msg.innerHTML='';
                                 }).catch(e=>{
                                     console.log('error',e);
                                     imageViewerModal.style.display='none';
-                                    document.getElementById('image_restricted_msg').innerHTML=`
+                                    image_restricted_msg.innerHTML=`
                                         We're unable to preview the image due to restrictions, but you can download it directly by <a href="${sourceUrl}" style="text-decoration: none;">clicking here</a>
                                     `;
+
                                 })
                                 // if(sourceUrl.includes('scontent-fra3-1.cdninstagram.com')){
                                 //     //restricted url
@@ -424,6 +430,7 @@
          // Function to check if an image is loaded
          function checkImageLoaded(imgElement) {
             return new Promise((resolve, reject) => {
+                console.log(imgElement.complete , imgElement.naturalWidth)
                 if (imgElement.complete && imgElement.naturalWidth > 0) {
                     //yes loaded
                     //resolve("Image successfully loaded.");
