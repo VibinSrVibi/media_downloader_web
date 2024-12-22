@@ -259,6 +259,7 @@
                                         //redirect to next page to show multiple data
                                         sessionStorage.setItem('instaResolution',uniqueResolution);
                                         sessionStorage.setItem('instaData',resultData.data);
+                                        spinner.style.display='none';
                                         window.location.href='file_downloader.html';
                                     }else{
                                         //show popup ie, single data
@@ -268,6 +269,7 @@
                                     //redirect
                                     sessionStorage.setItem('instaResolution',JSON.stringify({}));
                                     sessionStorage.setItem('instaData',JSON.stringify(resultData.data));
+                                    spinner.style.display='none';
                                     window.location.href='file_downloader.html';
                                 }
                             }else{
@@ -275,7 +277,7 @@
                                 showPop=true;
                             }
                             if(!showPop){
-                                spinner.style.display='none';
+                                
                             }else{
                                 var responseData=resultData.data[0];
                                 sourceUrl=responseData.url;
