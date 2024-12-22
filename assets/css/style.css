@@ -1,0 +1,103 @@
+body {
+    /* font-family: Arial, sans-serif; */
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    /*background-color: #f8f9fa;*/
+    background: linear-gradient(to right,#9E34B1,#D82D72);
+    padding: 5px;
+    /*text-align: center;*/
+    color: #ffffff;
+}
+.container-fluid {
+    /* padding: 0px; */
+    max-width: 100%;
+    margin: auto;
+}
+.site{
+    padding: 15px;
+}
+.site-name{
+    text-decoration: none;
+    color: #000000;
+    font-size: 25px;
+}
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input[type="url"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    /* width: 100%; */
+}
+button {
+    padding: 10px;
+    background-color: #007bff;
+    /* background: linear-gradient(to right,#9E34B1,#D82D72); */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+.legal {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+ul li{
+    padding: 3px;
+}
+.videoPlayerModal{
+    /* object-fit: cover;
+    height: 90vh;
+    width: 100%; */
+    width: 100%;               /* Full width */
+    max-width: 100%;           /* Prevent video from exceeding container width */
+    height: auto;              /* Maintain aspect ratio based on width */
+    max-height: 90vh;          /* Limit the height to 90% of the viewport */
+    object-fit: contain;       /* Ensures the entire video is visible without cropping */
+    display: block;            /* Removes inline-block spacing issues */
+    margin: 0 auto;            /* Center the video horizontally */
+    background-color: #000;  
+}
+.imageViewerModal{
+    width: 100%;               /* Full width of the container */
+    max-width: 100%;           /* Prevent the image from exceeding the container width */
+    height: auto;              /* Maintain aspect ratio based on width */
+    max-height: 90vh;          /* Limit the height to 90% of the viewport */
+    object-fit: contain;       /* Ensure the entire image is visible without cropping */
+    display: block;            /* Remove inline-block spacing issues */
+    margin: 0 auto;            /* Center the image horizontally */
+    background-color: #000; 
+}
+.fullscreen-spinner {
+    position: fixed;            /* Fixed position for fullscreen */
+    top: 0;
+    left: 0;
+    width: 100%;               /* Full width */
+    height: 100%;              /* Full height */
+    display: flex;             /* Flexbox for centering */
+    justify-content: center;   /* Center horizontally */
+    align-items: center;       /* Center vertically */
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Semi-transparent background */
+    z-index: 1050;             /* Ensure it overlays everything */
+}
+    
