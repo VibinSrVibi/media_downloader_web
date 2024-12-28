@@ -226,8 +226,8 @@
                         url: videoUrl
                     },
                     success: function(resultData){
-                        console.log(resultData);
-                        console.log(resultData.status);
+                        //console.log(resultData);
+                        //console.log(resultData.status);
                         if(resultData.status){
                             // $('#result').html(`
                             //     <p>Here is your video preview:</p>
@@ -240,7 +240,7 @@
                             //     </p>
                             // `);
                             var resultDataCount=resultData.data.length;
-                            console.log(resultDataCount)
+                            //console.log(resultDataCount)
                             var showPop=false;
                             if(resultDataCount>1){
                                 //check resulotion key exist
@@ -251,7 +251,7 @@
                                         counts[item.resolution]=(counts[item.resolution] || 0) + 1;
                                         return counts;
                                     },{});
-                                    console.log(uniqueResolution);
+                                    //console.log(uniqueResolution);
                                     //if(uniqueResolution.)
                                     const firstKey = Object.keys(uniqueResolution)[0];
                                     const firstValue = uniqueResolution[firstKey];   
@@ -382,7 +382,7 @@
             // Create a File object from the blob
             const fileName = "shared_file.mp4"; // Set a name for the file
             const file = new File([blob], fileName, { type: blob.type });
-            console.log(file)
+            //console.log(file)
             
             await navigator.share({
                 title: 'Check out this file!',
@@ -396,7 +396,7 @@
          // Function to check if an image is loaded
          function checkImageLoaded(imgElement) {
             return new Promise((resolve, reject) => {
-                console.log(imgElement.complete , imgElement.naturalWidth)
+                //console.log(imgElement.complete , imgElement.naturalWidth)
                 if (imgElement.complete && imgElement.naturalWidth > 0) {
                     //yes loaded
                     //resolve("Image successfully loaded.");
