@@ -1,0 +1,31 @@
+<script>
+    // Assuming the blob was created in the same context:
+const blobUrl = 'blob:https://www.youtube.com/75526acc-c313-4970-b830-650a97070cf0';
+const xhr = new XMLHttpRequest();
+xhr.open('GET', blobUrl, true);
+xhr.responseType = 'blob';
+
+xhr.onload = function () {
+    console.log(xhr)
+  if (xhr.status === 200) {
+    const blob = xhr.response;
+    console.log(blob); // Blob object
+
+    // Example: Download the blob
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'file_from_blob';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+};
+
+xhr.onerror = function () {
+  console.error('Failed to load blob URL.');
+};
+
+xhr.send();
+
+
+</script>
