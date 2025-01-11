@@ -53,7 +53,7 @@
                     </ol>
                     <form id="downloadForm">
                         <div class="input-group">
-                            <input type="url" id="videoUrl" name="videoUrl" class="form-control" placeholder="Enter Instagram video URL" required>
+                            <input type="url" id="videoUrl" name="videoUrl" class="form-control" placeholder="Enter Twitter video URL" required>
                             <button type="button" id="pasteButton" class="btn btn-secondary" onclick="pasteData()">Paste</button>
                         </div>
                         <!-- <input type="url" id="videoUrl" name="videoUrl" placeholder="Enter Instagram video URL" required> -->
@@ -66,7 +66,7 @@
                         <li><strong>Fast Downloading:</strong> Enjoy lightning-fast downloads without delays.</li>
                         <li><strong>No Login Required:</strong> No need to log in or share any personal information.</li>
                         <li><strong>High Quality:</strong> Save videos in the best available resolution, ensuring superior quality.</li>
-                        <li><strong>Supports Facebook and Instagram:</strong> Download videos from both platforms with ease.</li>
+                        <li><strong>Supports Facebook, Instagram and X (Twitter):</strong> Download videos from both platforms with ease.</li>
                         <li><strong>100% Free:</strong> Use our tool without any hidden charges or subscription fees.</li>
                         <li><strong>Safe & Secure:</strong> Our tool is designed with user privacy and data security in mind.</li>
                     </ul>
@@ -75,20 +75,84 @@
                     <p>We are committed to providing the best video downloading experience for all your favorite content.</p>
         
                     
-        
+                    <div class="modal fade" id="errorModal" aria-hidden="true" aria-labelledby="errorModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="videoModal">Download Failed!</h5>
+                                <button type="button" class="btn-danger" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                Sorry! Unable to download the content. Please check the URL and try again.
+                            </div>
+                            <!-- <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                            </div> -->
+                        </div>
+                        </div>
+                    </div>
                     
         
                     
-                    <!-- <div class="fullscreen-spinner" id="fullscreen-spinner">
+                    <div class="fullscreen-spinner" id="fullscreen-spinner">
                         <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Loading...</span>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </main>
             <footer>
                 <p>© 2024 Your VB Bingo. All rights reserved.</p>
                 <p class="legal">This website is not affiliated with Instagram. Download videos only for personal use and ensure you have permission from the content owner.</p>
             </footer>
+            <script>
+                const spinner=document.getElementById('fullscreen-spinner');
+                const errorModal=document.getElementById('errorModal');
+                const bootstrapErrorModal=new bootstrap.Modal(errorModal);
+                spinner.style.display='none';
+                function pasteData(){
+                    navigator.clipboard.readText().then((text)=>{
+                        document.getElementById('videoUrl').value=text;
+                    })
+                }
+                
+                document.getElementById('downloadForm').addEventListener('submit',function(){
+                    event.preventDefault();
+                    spinner.style.display='';
+                    const videoUrl = document.getElementById('videoUrl').value;
+                    if (videoUrl) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://media-downloader-backend-knkp.onrender.com/api/t/download',
+                            data: {
+                                url: videoUrl
+                            },
+                            success: function(resultData){
+                                console.log(resultData)
+                                if(resultData.status){
+                                    console.log(resultData.data,resultData.data.HD)
+                                    var fileData=resultData.data;
+                                    if(fileData.HD || fileData.SD){
+                                        sessionStorage.setItem('twitterData',resultData.data);
+                                        spinner.style.display='none';
+                                        window.location.href='./download_twitter_video.html';
+                                    }else{
+                                        //show the error message
+                                        bootstrapErrorModal.show();
+                                        spinner.style.display='none';
+                                    }
+                                }else{
+                                    //show the error message
+                                    bootstrapErrorModal.show();
+                                    spinner.style.display='none';
+                                }
+                            }
+                        })
+                    }else{
+
+                    }
+                });
+            </script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         </body>
 </html>
