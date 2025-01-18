@@ -100,4 +100,16 @@ ul li{
     background-color: rgba(0, 0, 0, 0.5); /* Optional: Semi-transparent background */
     z-index: 1050;             /* Ensure it overlays everything */
 }
+.play-store-badge {
+    width: 100%;
+    max-width: 200px;  /* Adjust max-width as per your design preference */
+    height: auto;
+}
+
+/* For larger screens */
+@media (min-width: 600px) {
+    .play-store-badge {
+        max-width: 250px; /* Adjust the max-width for larger screens */
+    }
+}
     
