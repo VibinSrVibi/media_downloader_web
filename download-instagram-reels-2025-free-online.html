@@ -94,10 +94,11 @@
         text-align: center;
         padding: 20px;
         background-color: #f8f9fa;
+        color: black;
     }
     .legal {
         font-size: 0.8rem;
-        color: #6c757d;
+        color: black;
     }
     ul li{
         padding: 3px;
@@ -149,6 +150,11 @@
             max-width: 250px; /* Adjust the max-width for larger screens */
         }
     }
+
+    .submit-btn{
+        background-color: #004DAD;
+    }
+
     
   </style>
 </head>
@@ -172,7 +178,7 @@
             <button type="button" id="pasteButton" class="btn btn-secondary" onclick="pasteData()">Paste</button>
         </div>
         <!-- <input type="url" id="videoUrl" name="videoUrl" placeholder="Enter Instagram video URL" required> -->
-        <button type="submit">Download</button>
+        <button type="submit" class="submit-btn">Download</button>
     </form>
     <div id="result" style="margin-top: 20px;"></div>
   </section>
@@ -356,7 +362,7 @@
     </div>
   
   <footer>
-        <p>© 2024 Your <a href="https://www.vbbingo.com" target="_blank">VB Bingo</a>. All rights reserved.</p>
+        <p>© 2024 Your <a href="https://www.vbbingo.com" target="_blank" style="text-decoration: none;color: black;"><strong>VB Bingo</strong></a>. All rights reserved.</p>
         <p class="legal">This website is not affiliated with Instagram. Download videos only for personal use and ensure you have permission from the content owner.</p>
     </footer>
 
