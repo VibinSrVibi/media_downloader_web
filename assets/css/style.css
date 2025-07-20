@@ -57,10 +57,11 @@ footer {
     text-align: center;
     padding: 20px;
     background-color: #f8f9fa;
+    color: black;
 }
 .legal {
     font-size: 0.8rem;
-    color: #6c757d;
+    color: black;
 }
 ul li{
     padding: 3px;
@@ -111,5 +112,9 @@ ul li{
     .play-store-badge {
         max-width: 250px; /* Adjust the max-width for larger screens */
     }
+}
+
+.submit-btn{
+    background-color: #004DAD;
 }
     
