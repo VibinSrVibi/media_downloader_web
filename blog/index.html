@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Discover trending Amazon products, cricket news, social media updates, and more on VB Bingo Blog. Fresh content daily to keep you informed." />
-  <meta name="keywords" content="VB Bingo Blog, trending blogs 2025, best blogs for shopping, best blogs for shopping and cricket, Amazon products and reviews blog, cricket news and blogs, social media updates blog, latest tech and lifestyle blog" />
+  <meta name="keywords" content="VB Bingo Blog, trending blogs 2025, best blogs for shopping, best blogs for shopping and cricket, Amazon products and reviews blog, cricket news and blogs, social media updates blog, latest tech and lifestyle blog, blog" />
   <meta name="author" content="VB Bingo" />
   <title>VB Bingo Blog</title>
 
@@ -191,11 +191,8 @@
     </header>
     <main class="container">
       <h1>Latest Blogs</h1>
-      <div id="blog-list" class="blog-list">
-        
-      </div>
-        
-        
+      <div id="loader" style="text-align:center; padding:20px; font-size:18px;">Loading blogs...</div>
+      <div id="blog-list" class="blog-list"></div>  
   </article> 
   </main>
   <footer class="container">
@@ -210,13 +207,30 @@
     mobileNav.classList.toggle('show');
   });
 
+  async function loadAds(){
+    // Now load AdSense scripts
+    const adsenseScript = document.createElement('script');
+    adsenseScript.async = true;
+    adsenseScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5457634260153789";
+    adsenseScript.crossOrigin = "anonymous";
+    document.body.appendChild(adsenseScript);
+
+    const ampAdsScript = document.createElement('script');
+    ampAdsScript.async = true;
+    ampAdsScript.setAttribute('custom-element', 'amp-auto-ads');
+    ampAdsScript.src = "https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js";
+    document.body.appendChild(ampAdsScript)
+  }
     async function loadBlogs() {
+      const loader = document.getElementById('loader');
+      const blogList = document.getElementById('blog-list');
+      loader.style.display = 'block';  // show loader
       try {
         const res = await fetch("https://blog-products.onrender.com/api/product/list"); // replace with your backend API
         const blogs = await res.json();
         let blog_datas=blogs.data;
         console.log(blogs.data)
-        const blogList = document.getElementById("blog-list");
+        //const blogList = document.getElementById("blog-list");
 
         blog_datas.forEach(blog => {
           console.log('data..',blog)
@@ -235,8 +249,12 @@
           `;
           blogList.appendChild(card);
         });
+        //loadAds();
       } catch (err) {
         console.error("Error loading blogs:", err);
+        loader.innerText = "Failed to load blogs. Please try again.";
+      } finally {
+        loader.style.display = 'none';  // hide loader
       }
     }
     loadBlogs();
