@@ -67,4 +67,10 @@
   <changefreq>daily</changefreq>
   <priority>1.0</priority>
 </url>
+<url>
+  <loc>https://www.vbbingo.com/blog/cloudflare-server-outage.html</loc>
+  <lastmod>2025-11-18</lastmod>
+  <changefreq>daily</changefreq>
+  <priority>1.0</priority>
+</url>
 </urlset>
