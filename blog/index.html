@@ -246,12 +246,16 @@
           // card.onclick=()=>{
           //   window.open(blog.redirect, "_blank");
           // }
+          let show_price_data='';
+          if(blog.source==0){
+            show_price_data=`<span onclick="openURL('${blog.redirect}')" class="show-pointer">Deal Price : ₹${blog.price}</span>`;
+          }
           card.innerHTML = `
             <img src="${blog.pic[0]}" alt="${blog.name}" onclick="openURL('${blog.redirect}')" class="show-pointer">
             <div class="blog-card-content">
               <h2 onclick="openURL('${blog.redirect}')" class="show-pointer">${blog.name}</h2>
               <p onclick="openURL('${blog.redirect}')" class="show-pointer">${blog.description}</p>
-              <span onclick="openURL('${blog.redirect}')" class="show-pointer">Deal Price : ₹${blog.price}</span>
+              ${show_price_data}
             </div>
           `;
           blogList.appendChild(card);
